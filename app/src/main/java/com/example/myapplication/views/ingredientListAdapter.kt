@@ -1,8 +1,10 @@
 package com.example.myapplication.views
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -23,23 +25,26 @@ class IngredientListAdapter(private val ingredients:ArrayList<IngredientModel>, 
         val currentTodoData = this.ingredients[position] // Get the data at the right position
         holder.bind(currentTodoData)
         holder.itemView.setOnClickListener {
-            //Toast.makeText(holder.itemView.context, "Selected note n°${position + 1}", Toast.LENGTH_LONG).show()
-            //ingredientClickHandler.displayTodoDetail(currentTodoData, position)
+            ingredientClickHandler.handleListChoice(currentTodoData, position)
         }
     }
-
 
     // Class representing the object linked to the XML
     // of on cell of the RV
     inner class IngredientViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private var ingredient : TextView
+        private var layout:LinearLayout
 
         init {
             this.ingredient = itemView.findViewById(R.id.cell_layout_ingredient_text_view)
+            this.layout = itemView.findViewById(R.id.cell_layout_ingredient_linear_layout)
         }
 
         fun bind(ingredient:IngredientModel) {
             this.ingredient.text = ingredient.name
+            this.ingredient.setOnClickListener{
+                
+            }
         }
     }
 }
