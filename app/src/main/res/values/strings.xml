@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="title_chose_ingredient">Choose your ingredient</string>
+    <string name="content_description_ingredient">INGREDIENT</string>
 </resources>
