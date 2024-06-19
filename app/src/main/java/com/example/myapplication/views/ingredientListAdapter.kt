@@ -1,6 +1,8 @@
 package com.example.myapplication.views
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,9 +44,6 @@ class IngredientListAdapter(private val ingredients:ArrayList<IngredientModel>, 
 
         fun bind(ingredient:IngredientModel) {
             this.ingredient.text = ingredient.name
-            this.ingredient.setOnClickListener{
-                
-            }
         }
     }
 }
