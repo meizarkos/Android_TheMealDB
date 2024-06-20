@@ -1,7 +1,6 @@
 package com.example.myapplication.views
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.IngredientModel
+import com.example.myapplication.viewmodels.IngredientViewModel
 
-class IngredientListAdapter(private val ingredients:ArrayList<IngredientModel>, private val ingredientClickHandler: IngredientOnClickLListener): RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>(){
+
+class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>): RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val ingredientView = LayoutInflater.from(parent.context)
             .inflate(R.layout.ingredient_cell_layout, parent, false)
@@ -24,26 +25,55 @@ class IngredientListAdapter(private val ingredients:ArrayList<IngredientModel>, 
     }
 
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
-        val currentTodoData = this.ingredients[position] // Get the data at the right position
-        holder.bind(currentTodoData)
+        val currentIngredientData = this.ingredients[position] // Get the data at the right position
+        holder.bind(currentIngredientData)
         holder.itemView.setOnClickListener {
-            ingredientClickHandler.handleListChoice(currentTodoData, position)
+            holder.updateBackgroundLayout(currentIngredientData,position)
         }
     }
 
-    // Class representing the object linked to the XML
-    // of on cell of the RV
     inner class IngredientViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private var ingredient : TextView
-        private var layout:LinearLayout
+        private var ingredientTextView : TextView
+        private var layout: LinearLayout
 
         init {
-            this.ingredient = itemView.findViewById(R.id.cell_layout_ingredient_text_view)
+            this.ingredientTextView = itemView.findViewById(R.id.cell_layout_ingredient_text_view)
             this.layout = itemView.findViewById(R.id.cell_layout_ingredient_linear_layout)
         }
 
+        private fun createLayoutBackground(color:Int): GradientDrawable {
+            return GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = 40f
+                setColor(color)
+            }
+        }
+
+        private fun manageLayoutBackground(ingredient:IngredientModel) {
+            if (ingredient.isSelected) {
+                this.layout.background = createLayoutBackground(0xFFF3CE99.toInt())
+            } else {
+                this.layout.background = createLayoutBackground(0xFFE0E0E0.toInt())
+            }
+        }
+
+
         fun bind(ingredient:IngredientModel) {
-            this.ingredient.text = ingredient.name
+            this.ingredientTextView.text = ingredient.name
+            manageLayoutBackground(ingredient)
+        }
+
+        fun updateBackgroundLayout(ingredient:IngredientModel,position: Int) {
+            ingredient.isSelected = !ingredient.isSelected
+            if(IngredientViewModel.choiceIngredientList.contains(ingredient)) {
+                IngredientViewModel.choiceIngredientList.remove(ingredient)
+                IngredientViewModel.ingredientList.value?.set(position,ingredient)
+            }
+            else {
+                IngredientViewModel.choiceIngredientList.add(ingredient)
+                IngredientViewModel.ingredientList.value?.set(position,ingredient)
+            }
+            manageLayoutBackground(ingredient)
         }
     }
 }

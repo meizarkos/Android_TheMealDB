@@ -36,6 +36,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.converter.gson)
+    implementation(libs.gson)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
     implementation(libs.flexbox)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

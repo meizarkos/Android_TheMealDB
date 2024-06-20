@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cell_layout_ingredient_linear_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/round_text_view"
-    android:backgroundTint="@color/background_ingredient_corner"
     android:orientation="horizontal"
     android:layout_marginBottom="15dp"
     android:layout_marginEnd="15dp"
-    android:padding="15dp">
+    android:padding="15dp"
+    tools:ignore="UseCompoundDrawables">
+
 <ImageView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
