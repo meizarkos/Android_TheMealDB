@@ -13,7 +13,7 @@ import com.example.myapplication.model.IngredientModel
 import com.example.myapplication.viewmodels.IngredientViewModel
 
 
-class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>): RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>(){
+class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>,private var searchValue:String?): RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val ingredientView = LayoutInflater.from(parent.context)
             .inflate(R.layout.ingredient_cell_layout, parent, false)
@@ -25,10 +25,11 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
     }
 
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
-        val currentIngredientData = this.ingredients[position] // Get the data at the right position
+        val currentIngredientData = this.ingredients[position]
+
         holder.bind(currentIngredientData)
         holder.itemView.setOnClickListener {
-            holder.updateBackgroundLayout(currentIngredientData,position)
+            holder.updateBackgroundLayout(currentIngredientData)
         }
     }
 
@@ -63,15 +64,22 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
             manageLayoutBackground(ingredient)
         }
 
-        fun updateBackgroundLayout(ingredient:IngredientModel,position: Int) {
+        private fun setList(ingredient: IngredientModel){
+            val index = IngredientViewModel.ingredientList.value?.indexOfFirst { it.id == ingredient.id }
+            index?.let {
+                IngredientViewModel.ingredientList.value?.set(it, ingredient)
+            }
+        }
+
+        fun updateBackgroundLayout(ingredient:IngredientModel) {
             ingredient.isSelected = !ingredient.isSelected
             if(IngredientViewModel.choiceIngredientList.contains(ingredient)) {
                 IngredientViewModel.choiceIngredientList.remove(ingredient)
-                IngredientViewModel.ingredientList.value?.set(position,ingredient)
+                setList(ingredient)
             }
             else {
                 IngredientViewModel.choiceIngredientList.add(ingredient)
-                IngredientViewModel.ingredientList.value?.set(position,ingredient)
+                setList(ingredient)
             }
             manageLayoutBackground(ingredient)
         }

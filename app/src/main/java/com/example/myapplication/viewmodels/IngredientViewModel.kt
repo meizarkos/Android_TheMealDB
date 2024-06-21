@@ -27,6 +27,7 @@ object IngredientViewModel {
                 val responseBody: List<IngredientModelDto> = response.body()?.meals ?: listOf()
                 val mappedResponse = responseBody.map {
                     IngredientModel(
+                        it.idIngredient,
                         it.strIngredient,
                     )
                 }

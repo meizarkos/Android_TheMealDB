@@ -28,6 +28,20 @@
         app:layout_constraintTop_toBottomOf="@+id/title_ingredient_text_view"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
+    <TextView
+        android:id="@+id/ingredient_no_result_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/search_ingredient_search_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="15dp"
+        android:padding="30dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:text="@string/ingredient_no_result_text_view"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredient_list_recycler_view"
         android:layout_width="match_parent"
