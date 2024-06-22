@@ -13,7 +13,7 @@ import com.example.myapplication.model.IngredientModel
 import com.example.myapplication.viewmodels.IngredientViewModel
 
 
-class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>,private var searchValue:String?): RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>(){
+class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>): RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val ingredientView = LayoutInflater.from(parent.context)
             .inflate(R.layout.ingredient_cell_layout, parent, false)

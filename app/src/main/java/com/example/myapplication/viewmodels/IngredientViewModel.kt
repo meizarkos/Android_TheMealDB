@@ -1,6 +1,10 @@
 package com.example.myapplication.viewmodels
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.model.IngredientListDto
 import com.example.myapplication.model.IngredientModel
@@ -15,12 +19,14 @@ object IngredientViewModel {
     var ingredientList: MutableLiveData<MutableList<IngredientModel>> = MutableLiveData()
     var choiceIngredientList: MutableList<IngredientModel> = mutableListOf()
 
-    fun fetchIngredientFromRepo(){
+    fun fetchIngredientFromRepo(loader:ProgressBar,error:TextView){
         val apiResponse = IngredientRepository(RetrofitClient.ingredientService).fetchIngredient()
+        loader.visibility = ProgressBar.VISIBLE
 
         apiResponse.enqueue(object : Callback<IngredientListDto> {
             override fun onFailure(p0: Call<IngredientListDto>, t: Throwable) {
-                Log.d("IngredientViewModel", "Failed to fetch ingredients")
+                loader.visibility = ProgressBar.GONE
+                error.visibility = TextView.VISIBLE
             }
 
             override fun onResponse(p0: Call<IngredientListDto>, response: Response<IngredientListDto>) {
@@ -32,6 +38,8 @@ object IngredientViewModel {
                     )
                 }
                 ingredientList.value = ArrayList(mappedResponse)
+                loader.visibility = ProgressBar.GONE
+                error.visibility = TextView.GONE
             }
         })
     }
