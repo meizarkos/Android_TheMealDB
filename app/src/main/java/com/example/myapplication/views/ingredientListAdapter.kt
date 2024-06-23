@@ -5,9 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.R
 import com.example.myapplication.model.IngredientModel
 import com.example.myapplication.viewmodels.IngredientViewModel
@@ -36,10 +41,12 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
     inner class IngredientViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private var ingredientTextView : TextView
         private var layout: LinearLayout
+        private var ingredientImage : ImageView
 
         init {
             this.ingredientTextView = itemView.findViewById(R.id.cell_layout_ingredient_text_view)
             this.layout = itemView.findViewById(R.id.cell_layout_ingredient_linear_layout)
+            this.ingredientImage = itemView.findViewById(R.id.cell_layout_ingredient_image_view)
         }
 
         private fun createLayoutBackground(color:Int): GradientDrawable {
@@ -62,6 +69,12 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
         fun bind(ingredient:IngredientModel) {
             this.ingredientTextView.text = ingredient.name
             manageLayoutBackground(ingredient)
+
+            Glide.with(itemView.context)
+                .load("https://www.themealdb.com/images/ingredients/${ingredient.name}.png")
+                .placeholder(R.drawable.homard) // Optional placeholder
+                .error(R.drawable.error_905) // Optional error image
+                .into(ingredientImage)
         }
 
         private fun setList(ingredient: IngredientModel){

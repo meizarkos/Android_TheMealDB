@@ -5,14 +5,15 @@
     android:id="@+id/cell_layout_ingredient_linear_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_marginBottom="15dp"
     android:layout_marginEnd="15dp"
     android:padding="15dp"
     tools:ignore="UseCompoundDrawables">
 
 <ImageView
-    android:layout_width="wrap_content"
+    android:id="@+id/cell_layout_ingredient_image_view"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:contentDescription="@string/content_description_ingredient" />
 

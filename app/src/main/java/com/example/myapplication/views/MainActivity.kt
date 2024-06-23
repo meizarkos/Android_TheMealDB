@@ -42,6 +42,13 @@ class MainActivity : AppCompatActivity(){
         IngredientViewModel.fetchIngredientFromRepo(loader,errorTextView)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.loader = findViewById(R.id.ingredient_list_progress_bar)
+        this.errorTextView = findViewById(R.id.ingredient_failure_text_view)
+        IngredientViewModel.fetchIngredientFromRepo(loader,errorTextView)
+    }
+
     private fun setUpActivityViews(data: MutableList<IngredientModel>) {
         this.ingredientListRecyclerView = findViewById(R.id.ingredient_list_recycler_view)
 

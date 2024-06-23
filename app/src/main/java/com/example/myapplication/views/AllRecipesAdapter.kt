@@ -1,19 +1,20 @@
 package com.example.myapplication.views
 
-import android.graphics.drawable.GradientDrawable
+import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.R
-import com.example.myapplication.model.IngredientModel
 import com.example.myapplication.model.RecipeModel
-import com.example.myapplication.viewmodels.IngredientViewModel
 
-class AllRecipesAdapter(private val recipes:ArrayList<RecipeModel>): RecyclerView.Adapter<AllRecipesAdapter.RecipeViewHolder>(){
+class AllRecipesAdapter(private val recipes: Array<RecipeModel>): RecyclerView.Adapter<AllRecipesAdapter.RecipeViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val ingredientView = LayoutInflater.from(parent.context)
             .inflate(R.layout.all_recipes_cell_layout, parent, false)
@@ -44,6 +45,13 @@ class AllRecipesAdapter(private val recipes:ArrayList<RecipeModel>): RecyclerVie
 
 
         fun bind(recipe:RecipeModel) {
+            Glide.with(itemView.context)
+                .load(recipe.strMealThumb)
+                .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(50)))
+                .placeholder(R.drawable.homard) // Optional placeholder
+                .error(R.drawable.error_905) // Optional error image
+                .into(backImage)
+
             this.description.text = recipe.strMeal
         }
     }
