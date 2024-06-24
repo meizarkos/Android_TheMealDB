@@ -83,21 +83,26 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
         }
 
         fun updateBackgroundLayout(ingredient:IngredientModel) {
-            ingredient.isSelected = !ingredient.isSelected
 
             var isInList = false
             for(choice in IngredientViewModel.choiceIngredientList){
-                if(choice.id == ingredient.id){
+                if(choice.id == ingredient.id && ingredient.isSelected){
                     isInList = true
                     break
                 }
             }
-            setList(ingredient)
+
             if(isInList) {
+                Log.d("CHOICES DELETE", "updateBackgroundLayout")
                 IngredientViewModel.choiceIngredientList.remove(ingredient)
+                ingredient.isSelected = !ingredient.isSelected
+                setList(ingredient)
             }
             else {
+                Log.d("CHOICES ADD", "updateBackgroundLayout")
                 IngredientViewModel.choiceIngredientList.add(ingredient)
+                ingredient.isSelected = !ingredient.isSelected
+                setList(ingredient)
             }
             Log.d("CHOICES", "updateBackgroundLayout: ${IngredientViewModel.choiceIngredientList}")
             manageLayoutBackground(ingredient)
