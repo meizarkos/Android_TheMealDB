@@ -21,7 +21,7 @@ import com.example.myapplication.viewmodels.IngredientViewModel
 import com.example.myapplication.viewmodels.RecipesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class AllRecipes: AppCompatActivity() {
+class AllRecipes: AppCompatActivity(), RecipeOnClickListener{
 
     private var ingredientList: ArrayList<IngredientModel>? = null
     private lateinit var allRecipesRecyclerView: RecyclerView
@@ -87,7 +87,7 @@ class AllRecipes: AppCompatActivity() {
             allRecipesRecyclerView.visibility = View.GONE
         }
         else{
-            val recipesAdapter = AllRecipesAdapter(dataFilter)
+            val recipesAdapter = AllRecipesAdapter(dataFilter,this)
             noResult.visibility = View.GONE
             allRecipesRecyclerView.visibility = View.VISIBLE
             this.allRecipesRecyclerView.layoutManager = GridLayoutManager(this, 2)
@@ -109,4 +109,15 @@ class AllRecipes: AppCompatActivity() {
             }
         }
     }
+
+    override fun displayRecipeDetail(recipe: RecipeModel, position: Int) {
+        Intent(this, RecipeDetail::class.java).also {
+            it.putExtra("RECIPE_MODEL_EXTRA", recipe)
+            startActivity(it)
+        }
+    }
+}
+
+interface RecipeOnClickListener{
+    fun displayRecipeDetail(recipe: RecipeModel, position: Int)
 }

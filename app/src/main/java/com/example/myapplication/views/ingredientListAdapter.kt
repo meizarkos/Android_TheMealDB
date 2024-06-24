@@ -71,8 +71,8 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
 
             Glide.with(itemView.context)
                 .load("https://www.themealdb.com/images/ingredients/${ingredient.name}.png")
-                .placeholder(R.drawable.homard) // Optional placeholder
-                .error(R.drawable.error_905) // Optional error image
+                .placeholder(R.drawable.homard_black) // Optional placeholder
+                .error(R.drawable.error_905_black) // Optional error image
                 .into(ingredientImage)
         }
 

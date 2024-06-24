@@ -14,7 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.R
 import com.example.myapplication.model.RecipeModel
 
-class AllRecipesAdapter(private val recipes: Array<RecipeModel>): RecyclerView.Adapter<AllRecipesAdapter.RecipeViewHolder>(){
+class AllRecipesAdapter(private val recipes: Array<RecipeModel>,private val detailRecipeClickHanlder:RecipeOnClickListener): RecyclerView.Adapter<AllRecipesAdapter.RecipeViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val ingredientView = LayoutInflater.from(parent.context)
             .inflate(R.layout.all_recipes_cell_layout, parent, false)
@@ -30,7 +30,7 @@ class AllRecipesAdapter(private val recipes: Array<RecipeModel>): RecyclerView.A
 
         holder.bind(currentRecipeData)
         holder.itemView.setOnClickListener {
-
+            detailRecipeClickHanlder.displayRecipeDetail(currentRecipeData, position)
         }
     }
 

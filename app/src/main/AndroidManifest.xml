@@ -20,6 +20,11 @@
             android:parentActivityName=".views.MainActivity"
             android:name=".views.AllRecipes"
             android:exported="false" />
+
+        <activity
+            android:name=".views.RecipeDetail"
+            android:parentActivityName=".views.AllRecipes"
+            android:exported="false"/>
         <activity
             android:name=".views.MainActivity"
             android:exported="true">
