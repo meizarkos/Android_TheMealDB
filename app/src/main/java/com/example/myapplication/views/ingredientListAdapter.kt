@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -38,19 +39,19 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
 
     inner class IngredientViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private var ingredientTextView : TextView
-        private var layout: LinearLayout
+        private var layout: FrameLayout
         private var ingredientImage : ImageView
 
         init {
             this.ingredientTextView = itemView.findViewById(R.id.cell_layout_ingredient_text_view)
-            this.layout = itemView.findViewById(R.id.cell_layout_ingredient_linear_layout)
+            this.layout = itemView.findViewById(R.id.cell_ingredient_frame_layout)
             this.ingredientImage = itemView.findViewById(R.id.cell_layout_ingredient_image_view)
         }
 
         private fun createLayoutBackground(color:Int): GradientDrawable {
             return GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
-                cornerRadius = 40f
+                cornerRadius = 500f
                 setColor(color)
             }
         }
@@ -93,18 +94,15 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
             }
 
             if(isInList) {
-                Log.d("CHOICES DELETE", "updateBackgroundLayout")
                 IngredientViewModel.choiceIngredientList.remove(ingredient)
                 ingredient.isSelected = !ingredient.isSelected
                 setList(ingredient)
             }
             else {
-                Log.d("CHOICES ADD", "updateBackgroundLayout")
                 IngredientViewModel.choiceIngredientList.add(ingredient)
                 ingredient.isSelected = !ingredient.isSelected
                 setList(ingredient)
             }
-            Log.d("CHOICES", "updateBackgroundLayout: ${IngredientViewModel.choiceIngredientList}")
             manageLayoutBackground(ingredient)
         }
     }

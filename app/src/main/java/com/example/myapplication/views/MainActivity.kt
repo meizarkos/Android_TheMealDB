@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.IngredientModel
@@ -81,10 +82,7 @@ class MainActivity : AppCompatActivity(){
             val ingredientAdapter = IngredientListAdapter(dataFilter)
 
             // Setup Linear layout manager
-            val flexboxLayoutManager = FlexboxLayoutManager(this).apply {
-                flexDirection = FlexDirection.ROW
-                justifyContent = JustifyContent.FLEX_START
-            }
+            val flexboxLayoutManager = GridLayoutManager(this, 4)
 
             this.ingredientListRecyclerView.layoutManager = flexboxLayoutManager
             this.ingredientListRecyclerView.setAdapter(ingredientAdapter)
