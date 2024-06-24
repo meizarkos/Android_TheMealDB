@@ -4,4 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_ingredient_corner">#E0E0E0</color>
     <color name="background_ingredient_corner_selected">#F3CE99</color>
+    <color name="text_errors">#EF4437</color>
+    <color name="go_to_recipes">#DD9E42</color>
+    <color name="go_to_ingredient">@color/go_to_recipes</color>
 </resources>

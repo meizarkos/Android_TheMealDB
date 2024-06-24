@@ -5,22 +5,36 @@
     android:id="@+id/cell_layout_ingredient_linear_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginBottom="15dp"
-    android:layout_marginEnd="15dp"
-    android:padding="15dp"
+    android:backgroundTint="@color/black"
+    android:orientation="vertical"
+    android:layout_marginBottom="20dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
     tools:ignore="UseCompoundDrawables">
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:contentDescription="@string/content_description_ingredient" />
+
+    <FrameLayout
+        android:id="@+id/cell_ingredient_frame_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circular_background_image_view">
+
+        <ImageView
+            android:id="@+id/cell_layout_ingredient_image_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/content_description_ingredient" />
+
+    </FrameLayout>
 
 <TextView
     android:id="@+id/cell_layout_ingredient_text_view"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@color/black"
-    android:textSize="16sp" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textColor="@color/white"
+    android:textStyle="bold"
+    android:gravity="center"
+    android:textSize="12sp" />
 
 </LinearLayout>

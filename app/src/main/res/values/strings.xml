@@ -1,6 +1,14 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Android_TheMealDB</string>
     <string name="title_chose_ingredient">Choose your ingredient</string>
     <string name="content_description_ingredient">INGREDIENT</string>
     <string name="ingredient_no_result_text_view">Aucun résultat ne correspond à votre recherche</string>
+    <string name="error_text">Oups, une erreur s\'est produite</string>
+    <string name="all_recipes_title_text_view">The recipes you may like</string>
+    <string name="recipe">RECIPE</string>
+    <string name="image_recette">IMAGE_RECETTE</string>
+    <string name="duration_45min">Duration : 45min</string>
+    <string name="recipe_detail">RECIPE_DETAIL</string>
+    <string name="ingredient_in_recipe">INGREDIENT IN RECIPE</string>
+    <string name="procedure_detail_recette">Procedure</string>
 </resources>

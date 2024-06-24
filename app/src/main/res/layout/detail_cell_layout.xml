@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="70dp"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="35dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:id="@+id/detail_cell_ingredient_frame_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_background_image_view">
+
+            <ImageView
+                android:id="@+id/detail_cell_layout_ingredient_image_view"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/ingredient_in_recipe"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/detail_cell_layout_ingredient_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/detail_cell_layout_ingredient_measure_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:textSize="11sp"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

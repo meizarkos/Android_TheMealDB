@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ingredient_list_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/title_ingredient_text_view"
@@ -13,18 +14,19 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="15dp"
-        android:padding="30dp"
-        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"
+        android:padding="18dp"
+        android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="21sp"
         android:text="@string/title_chose_ingredient" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_ingredient_search_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        app:closeIcon="@drawable/close"
+        app:searchIcon="@drawable/search"
         app:layout_constraintTop_toBottomOf="@+id/title_ingredient_text_view"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
@@ -36,18 +38,44 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="15dp"
         android:padding="30dp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="15sp"
         android:visibility="gone"
         android:text="@string/ingredient_no_result_text_view"/>
+
+    <ProgressBar
+        android:id="@+id/ingredient_list_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/search_ingredient_search_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateDrawable="@drawable/loader"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/ingredient_failure_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/search_ingredient_search_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="30dp"
+        android:textColor="@color/text_errors"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:text="@string/error_text"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredient_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@id/search_ingredient_search_bar"
         tools:itemCount="5"
@@ -64,8 +92,9 @@
             app:fabCustomSize="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/compass_svgrepo_com"
             android:textSize="20sp"
+            android:backgroundTint="@color/go_to_recipes"
             android:importantForAccessibility="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
