@@ -19,11 +19,12 @@ import retrofit2.Response
 object RecipesViewModel {
     var recipesList: MutableLiveData<ArrayList<RecipeModel>> = MutableLiveData()
 
-    private fun handleRequests(apiResponse: Call<RecipeListDto>, loader: ProgressBar, error: TextView){
+    private fun handleRequests(apiResponse: Call<RecipeListDto>, loader: ProgressBar, error: TextView,noResult: TextView){
         apiResponse.enqueue(object : Callback<RecipeListDto> {
             override fun onFailure(p0: Call<RecipeListDto>, t: Throwable) {
                 loader.visibility = ProgressBar.GONE
                 error.visibility = TextView.VISIBLE
+                noResult.visibility = TextView.GONE
             }
 
             override fun onResponse(p0: Call<RecipeListDto>, response: Response<RecipeListDto>) {
@@ -44,7 +45,7 @@ object RecipesViewModel {
         })
     }
 
-    fun getRecipes(ingredientChoices: ArrayList<IngredientModel>?, loader: ProgressBar, error: TextView){
+    fun getRecipes(ingredientChoices: ArrayList<IngredientModel>?, loader: ProgressBar, error: TextView,noResult:TextView){
         loader.visibility = ProgressBar.VISIBLE
 
         var apiResponse: Call<RecipeListDto>
@@ -52,12 +53,12 @@ object RecipesViewModel {
         if (!ingredientChoices.isNullOrEmpty()) {
             for(ingredient in ingredientChoices){
                 apiResponse = IngredientRepository(RetrofitClient.ingredientService).fetchRecipes(transformNullinEmpty(ingredient.name))
-                handleRequests(apiResponse, loader, error)
+                handleRequests(apiResponse, loader, error,noResult)
             }
         }
         else{
             apiResponse = IngredientRepository(RetrofitClient.ingredientService).fetchRecipes("")
-            handleRequests(apiResponse, loader, error)
+            handleRequests(apiResponse, loader, error, noResult)
         }
     }
 }

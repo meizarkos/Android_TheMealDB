@@ -10,12 +10,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.R
 import com.example.myapplication.model.IngredientModel
 import com.example.myapplication.viewmodels.IngredientViewModel
+import okhttp3.internal.ignoreIoExceptions
 
 
 class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>): RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>(){
@@ -86,14 +84,22 @@ class IngredientListAdapter(private val ingredients:MutableList<IngredientModel>
 
         fun updateBackgroundLayout(ingredient:IngredientModel) {
             ingredient.isSelected = !ingredient.isSelected
-            if(IngredientViewModel.choiceIngredientList.contains(ingredient)) {
+
+            var isInList = false
+            for(choice in IngredientViewModel.choiceIngredientList){
+                if(choice.id == ingredient.id){
+                    isInList = true
+                    break
+                }
+            }
+            setList(ingredient)
+            if(isInList) {
                 IngredientViewModel.choiceIngredientList.remove(ingredient)
-                setList(ingredient)
             }
             else {
                 IngredientViewModel.choiceIngredientList.add(ingredient)
-                setList(ingredient)
             }
+            Log.d("CHOICES", "updateBackgroundLayout: ${IngredientViewModel.choiceIngredientList}")
             manageLayoutBackground(ingredient)
         }
     }

@@ -1,6 +1,7 @@
 package com.example.myapplication.views
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -11,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.IngredientModel
 import com.example.myapplication.utils.filterListBySubstring
+import com.example.myapplication.utils.setSearchViewTextColor
 import com.example.myapplication.utils.transformNullinEmpty
 import com.example.myapplication.viewmodels.IngredientViewModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class MainActivity : AppCompatActivity(){
 
@@ -32,22 +35,37 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.searchBar = findViewById(R.id.search_ingredient_search_bar)
+        setSearchViewTextColor(searchBar, Color.WHITE)
         this.noResultTextView = findViewById(R.id.ingredient_no_result_text_view)
         this.loader = findViewById(R.id.ingredient_list_progress_bar)
         this.errorTextView = findViewById(R.id.ingredient_failure_text_view)
 
+        /*onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("WE GO BACK", "handleOnBackPressed: ")
+                IngredientViewModel.fetchIngredientFromRepo(loader, errorTextView)
+            }
+            override fun handleOnBackCancelled(){
+                Log.d("WE GO BACK", "handleOnBackPressed: ")
+                IngredientViewModel.fetchIngredientFromRepo(loader, errorTextView)
+            }
+            override fun handleOnBackStarted(backEvent:BackEventCompat){
+                Log.d("WE GO BACK", "handleOnBackPressed: ")
+                IngredientViewModel.fetchIngredientFromRepo(loader, errorTextView)
+            }
+        })*/
+
         observeIngredientListData()
         setGoToRecipesButton()
         handleSearch()
-        IngredientViewModel.fetchIngredientFromRepo(loader,errorTextView)
+        IngredientViewModel.fetchIngredientFromRepo(loader, errorTextView)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        this.loader = findViewById(R.id.ingredient_list_progress_bar)
-        this.errorTextView = findViewById(R.id.ingredient_failure_text_view)
-        IngredientViewModel.fetchIngredientFromRepo(loader,errorTextView)
-    }
+    /*override fun onBackPressed() {
+        Log.d("WE GO BACK", "handleOnBackPressed: ")
+        IngredientViewModel.fetchIngredientFromRepo(loader, errorTextView)
+        super.onBackPressed() // If you still want the default back navigation behavior
+    }*/
 
     private fun setUpActivityViews(data: MutableList<IngredientModel>) {
         this.ingredientListRecyclerView = findViewById(R.id.ingredient_list_recycler_view)

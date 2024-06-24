@@ -27,14 +27,25 @@ object IngredientViewModel {
             override fun onFailure(p0: Call<IngredientListDto>, t: Throwable) {
                 loader.visibility = ProgressBar.GONE
                 error.visibility = TextView.VISIBLE
+
             }
 
             override fun onResponse(p0: Call<IngredientListDto>, response: Response<IngredientListDto>) {
                 val responseBody: List<IngredientModelDto> = response.body()?.meals ?: listOf()
                 val mappedResponse = responseBody.map {
+                    var isSelected = false
+
+                    for(value in choiceIngredientList){
+                        if(it.idIngredient == value.id ){
+                            isSelected = true
+                            break
+                        }
+                    }
+
                     IngredientModel(
                         it.idIngredient,
                         it.strIngredient,
+                        isSelected
                     )
                 }
                 ingredientList.value = ArrayList(mappedResponse)

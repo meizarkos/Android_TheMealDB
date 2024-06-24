@@ -2,7 +2,7 @@ package com.example.myapplication.model
 
 import android.os.Parcelable
 
-data class IngredientModel(val id:String?,val name: String?, var isSelected: Boolean = false):Parcelable{
+data class IngredientModel(val id:String?,val name: String?, var isSelected: Boolean):Parcelable{
     constructor(parcel: android.os.Parcel) : this(
         parcel.readString(),
         parcel.readString(),

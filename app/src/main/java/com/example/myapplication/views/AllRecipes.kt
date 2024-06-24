@@ -1,5 +1,7 @@
 package com.example.myapplication.views
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -13,9 +15,11 @@ import com.example.myapplication.R
 import com.example.myapplication.model.IngredientModel
 import com.example.myapplication.model.RecipeModel
 import com.example.myapplication.utils.filterArrayRecipe
+import com.example.myapplication.utils.setSearchViewTextColor
 import com.example.myapplication.utils.transformNullinEmpty
 import com.example.myapplication.viewmodels.IngredientViewModel
 import com.example.myapplication.viewmodels.RecipesViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class AllRecipes: AppCompatActivity() {
 
@@ -26,11 +30,13 @@ class AllRecipes: AppCompatActivity() {
     private lateinit var noResult: TextView
     private lateinit var searchRecipe : SearchView
     private var searchRecipeValue: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_recipes)
 
         this.searchRecipe = findViewById(R.id.search_recipes_search_bar)
+        setSearchViewTextColor(searchRecipe, Color.WHITE)
         this.noResult = findViewById(R.id.all_recipes_no_result_text_view)
         this.loader = findViewById(R.id.all_recipes_progress_bar)
         this.error = findViewById(R.id.all_recipes_failure_text_view)
@@ -38,10 +44,11 @@ class AllRecipes: AppCompatActivity() {
 
         this.ingredientList = intent.getParcelableArrayListExtra("CHOICE_LIST")
 
+        setGoToIngredientsButton()
         observeRecipeListData()
         handleSearch()
         RecipesViewModel.recipesList.value = arrayListOf()
-        RecipesViewModel.getRecipes(ingredientList,loader,error)
+        RecipesViewModel.getRecipes(ingredientList,loader,error,noResult)
     }
 
     override fun onBackPressed() {
@@ -50,7 +57,8 @@ class AllRecipes: AppCompatActivity() {
         RecipesViewModel.recipesList.value = arrayListOf()
         this.loader = findViewById(R.id.all_recipes_progress_bar)
         this.error = findViewById(R.id.all_recipes_failure_text_view)
-        RecipesViewModel.getRecipes(ingredientList,loader,error)
+        this.noResult = findViewById(R.id.all_recipes_no_result_text_view)
+        RecipesViewModel.getRecipes(ingredientList,loader,error,noResult)
     }
 
     private fun handleSearch(){
@@ -90,6 +98,15 @@ class AllRecipes: AppCompatActivity() {
     private fun observeRecipeListData() {
         RecipesViewModel.recipesList.observe(this) { recipe ->
             this.setUpActivityViews(recipe)
+        }
+    }
+
+    private fun setGoToIngredientsButton(){
+        val redirectionButton = findViewById<FloatingActionButton>(R.id.go_to_ingredients)
+        redirectionButton.setOnClickListener {
+            Intent(this, MainActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 }
