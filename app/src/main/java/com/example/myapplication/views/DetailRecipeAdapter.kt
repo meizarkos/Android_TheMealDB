@@ -11,9 +11,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.R
-import com.example.myapplication.model.RecipeModel
+import com.example.myapplication.model.NameUrl
 
-class DetailRecipeAdapter(private val ingredients: MutableList<RecipeDetail.NameUrl>,): RecyclerView.Adapter<DetailRecipeAdapter.DetailRecipeViewHolder>(){
+class DetailRecipeAdapter(private val ingredients: MutableList<NameUrl>,): RecyclerView.Adapter<DetailRecipeAdapter.DetailRecipeViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailRecipeViewHolder{
         val detailView = LayoutInflater.from(parent.context)
             .inflate(R.layout.detail_cell_layout, parent, false)
@@ -42,7 +42,7 @@ class DetailRecipeAdapter(private val ingredients: MutableList<RecipeDetail.Name
         }
 
 
-        fun bind(detail:RecipeDetail.NameUrl) {
+        fun bind(detail: NameUrl) {
             Glide.with(itemView.context)
                 .load("https://www.themealdb.com/images/ingredients/${detail.name}.png")
                 .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(500)))

@@ -2,11 +2,9 @@ package com.example.myapplication.views
 
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -32,12 +30,13 @@ class RecipeDetail: AppCompatActivity() {
     private lateinit var recipeLoader : ProgressBar
     private lateinit var recipeImage : ImageView
     private lateinit var recipeTitle : TextView
+    private lateinit var recipeInstructions : TextView
 
-    private lateinit var recipeIngredients:RecyclerView
+    private lateinit var recipeIngredientsRecyclerView:RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_recipe)
+        setContentView(R.layout.activity_detail_recipe)
         this.recipe = intent.getParcelableExtra("RECIPE_MODEL_EXTRA")
 
         this.recipeError = findViewById(R.id.recipe_detail_failure_text_view)
@@ -80,25 +79,19 @@ class RecipeDetail: AppCompatActivity() {
                 }
                 recipeTitle.text = detailRecipe?.strMeal
 
-                recipeIngredients = findViewById(R.id.recipe_detail_recycler_view)
+                recipeIngredientsRecyclerView = findViewById(R.id.recipe_detail_recycler_view)
 
-                val ingredients = mutableListOf<NameUrl>()
-                for (i in 1..20) {
+                val ingredients = detailRecipe?.getIngredientFromDetail()
+                val linearLayoutManager = LinearLayoutManager(this@RecipeDetail)
+                linearLayoutManager.orientation  = LinearLayoutManager.HORIZONTAL
 
-                    val ingredient = detailRecipe?.javaClass?.getDeclaredField("strIngredient$i")?.get(recipe) as? String?
-                    val measure = detailRecipe?.javaClass?.getDeclaredField("strMeasure$i")?.get(recipe) as? String?
+                recipeIngredientsRecyclerView.layoutManager = linearLayoutManager
+                recipeIngredientsRecyclerView.adapter = ingredients?.let { DetailRecipeAdapter(it) }
 
-                    if (!ingredient.isNullOrBlank() && !measure.isNullOrBlank()) {
-                        ingredients.add(NameUrl(ingredient, measure))
-                    }
-                }
-
-                val linearLayoutHorizontal = LinearLayoutManager(this@RecipeDetail, LinearLayoutManager.HORIZONTAL, false)
-                recipeIngredients.layoutManager = linearLayoutHorizontal
-                recipeIngredients.adapter = DetailRecipeAdapter(ingredients)
+                recipeInstructions = findViewById(R.id.detail_recipe_instructions_text_view)
+                recipeInstructions.text = detailRecipe?.strInstructions
             }
         })
     }
-
-    inner class NameUrl(val name: String,val measure:String)
 }
+

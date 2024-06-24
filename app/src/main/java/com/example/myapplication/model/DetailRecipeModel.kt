@@ -1,5 +1,7 @@
 package com.example.myapplication.model
 
+
+data class NameUrl(val name: String,val measure:String)
 data class DetailRecipeModel(
     val dateModified: String?,
     val idMeal: String?,
@@ -55,5 +57,18 @@ data class DetailRecipeModel(
     val strTags: String?,
     val strYoutube: String?
 ){
+    fun getIngredientFromDetail(): MutableList<NameUrl>{
+        val ingredients = mutableListOf<NameUrl>()
+        for(i in 1..20) {
+
+            val ingredient = this.javaClass.getDeclaredField("strIngredient$i").get(this) as? String?
+            val measure = this.javaClass.getDeclaredField("strMeasure$i").get(this) as? String?
+
+            if (!ingredient.isNullOrBlank() && !measure.isNullOrBlank()) {
+                ingredients.add(NameUrl(ingredient, measure))
+            }
+        }
+        return ingredients
+    }
 
 }

@@ -10,4 +10,5 @@
     <string name="duration_45min">Duration : 45min</string>
     <string name="recipe_detail">RECIPE_DETAIL</string>
     <string name="ingredient_in_recipe">INGREDIENT IN RECIPE</string>
+    <string name="procedure_detail_recette">Procedure</string>
 </resources>
