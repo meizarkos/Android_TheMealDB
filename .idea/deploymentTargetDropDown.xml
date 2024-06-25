@@ -2,7 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="IngredientListTest">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="failure_is_displayed()">
+        <State />
+      </entry>
+      <entry key="go_to_next_activity()">
+        <State />
+      </entry>
+      <entry key="loader_is_displayed()">
+        <State />
+      </entry>
+      <entry key="test_ingredient_list_has_no_result()">
         <State />
       </entry>
     </value>

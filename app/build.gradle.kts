@@ -36,7 +36,9 @@ android {
 }
 
 dependencies {
+    androidTestImplementation(libs.androidx.uiautomator)
     implementation(libs.glide)
+    androidTestImplementation(libs.testng)
     annotationProcessor(libs.compiler)
     implementation(libs.converter.gson)
     implementation(libs.gson)
