@@ -47,7 +47,7 @@ object RecipesViewModel {
 
     fun getRecipes(ingredientChoices: ArrayList<IngredientModel>?, loader: ProgressBar, error: TextView,noResult:TextView){
         loader.visibility = ProgressBar.VISIBLE
-
+        noResult.visibility = TextView.GONE
         var apiResponse: Call<RecipeListDto>
 
         if (!ingredientChoices.isNullOrEmpty()) {
