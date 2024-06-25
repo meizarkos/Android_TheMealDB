@@ -1,8 +1,10 @@
 package com.example.myapplication.views
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +33,7 @@ class RecipeDetail: AppCompatActivity() {
     private lateinit var recipeImage : ImageView
     private lateinit var recipeTitle : TextView
     private lateinit var recipeInstructions : TextView
+    private lateinit var scrollInstruction:ScrollView
 
     private lateinit var recipeIngredientsRecyclerView:RecyclerView
 
@@ -90,6 +93,13 @@ class RecipeDetail: AppCompatActivity() {
 
                 recipeInstructions = findViewById(R.id.detail_recipe_instructions_text_view)
                 recipeInstructions.text = detailRecipe?.strInstructions
+
+                Log.d("SUICIDE", "onResponse: ${detailRecipe?.strInstructions}")
+
+                scrollInstruction = findViewById(R.id.recipe_detail_instructions_scroll_view)
+                scrollInstruction.setPadding(0,0,0,
+                    detailRecipe?.strInstructions?.length!!/50 * 10
+                )
             }
         })
     }
