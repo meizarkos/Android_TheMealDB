@@ -63,6 +63,9 @@ class IngredientListTest {
         if(R.id.ingredient_list_progress_bar == View.VISIBLE){
             onView(withId(R.id.ingredient_list_progress_bar)).check(matches(isDisplayed()))
         }
+        else{
+            assert(false)
+        }
         onView(withId(R.id.ingredient_no_result_text_view)).check(matches(not(isDisplayed())))
         onView(withId(R.id.ingredient_failure_text_view)).check(matches(not(isDisplayed())))
     }
