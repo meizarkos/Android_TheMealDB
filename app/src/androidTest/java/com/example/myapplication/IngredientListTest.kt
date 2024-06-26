@@ -1,21 +1,18 @@
 package com.example.myapplication
 
-import android.util.Log
+
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
-import com.example.myapplication.views.MainActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.uiautomator.UiDevice
-
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.`RecyclerViewActions$ActionOnItemViewAction-IA`
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
@@ -24,15 +21,77 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
 import com.example.myapplication.viewmodels.IngredientViewModel
-import junit.framework.TestCase.assertTrue
-import okhttp3.internal.wait
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.core.AllOf
-import org.junit.Before
-
+import com.example.myapplication.views.MainActivity
+import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.hamcrest.CoreMatchers.not
+import org.junit.Assert.assertTrue
+
+
+class GetBackgroundColorAction : ViewAction {
+
+    private var backgroundFigure: GradientDrawable = GradientDrawable()
+    override fun getConstraints(): Matcher<View> {
+        return ViewMatchers.isAssignableFrom(View::class.java)
+    }
+
+    override fun getDescription(): String {
+        return "get background color of a view"
+    }
+
+    override fun perform(uiController: UiController, view: View) {
+        if (view.background is GradientDrawable) {
+            val colorDrawable = view.background as GradientDrawable
+            this.backgroundFigure = colorDrawable
+        }
+    }
+
+    fun getBackgroundFigure(): GradientDrawable {
+        return backgroundFigure
+    }
+
+    companion object {
+        fun getBackgroundColor(): GetBackgroundColorAction {
+            return GetBackgroundColorAction()
+        }
+    }
+}
+
+class GetFrameLayoutBackgroundColorAction(
+    private val frameLayoutId: Int,
+    private val getBackgroundColorAction: GetBackgroundColorAction
+) : ViewAction {
+
+    override fun getConstraints(): Matcher<View>? {
+        return ViewMatchers.isAssignableFrom(View::class.java)
+    }
+
+    override fun getDescription(): String {
+        return "Get background color of FrameLayout inside cell"
+    }
+
+    override fun perform(uiController: UiController, view: View) {
+        val frameLayout = view.findViewById<View>(frameLayoutId)
+        getBackgroundColorAction.perform(uiController, frameLayout)
+    }
+
+    fun getBackgroundFigure(): GradientDrawable {
+        return getBackgroundColorAction.getBackgroundFigure()
+    }
+
+    companion object {
+        fun getBackgroundColor(frameLayoutId: Int): GetFrameLayoutBackgroundColorAction {
+            return GetFrameLayoutBackgroundColorAction(
+                frameLayoutId,
+                GetBackgroundColorAction.getBackgroundColor()
+            )
+        }
+    }
+}
+
 
 fun setSearchViewQuery(query: String, submit: Boolean): ViewAction {
     return ViewActions.actionWithAssertions(object : ViewAction {
@@ -50,6 +109,7 @@ fun setSearchViewQuery(query: String, submit: Boolean): ViewAction {
         }
     })
 }
+
 
 @RunWith(AndroidJUnit4::class)
 class IngredientListTest {
@@ -159,5 +219,44 @@ class IngredientListTest {
 
         assertTrue("Ingredient choice should be empty", IngredientViewModel.choiceIngredientList.isEmpty())
         assertTrue("Ingredient list is not selected", !firstElement.isSelected)
+    }
+
+    @Test
+    fun check_background_color_change(){
+
+        val unselected: GradientDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 500f
+            setColor(0xFFE0E0E0.toInt())
+        }
+
+        val selected: GradientDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 500f
+            setColor(0xFFF3CE99.toInt())
+        }
+
+        ActivityScenario.launch(MainActivity::class.java)
+        Thread.sleep(1000)
+        val getBackgroundColorAction = GetFrameLayoutBackgroundColorAction.getBackgroundColor(R.id.cell_ingredient_frame_layout)
+
+        onView(withId(R.id.ingredient_list_recycler_view))
+            .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, getBackgroundColorAction))
+            .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+
+
+        assertTrue("is gradient equal", unselected.color == getBackgroundColorAction.getBackgroundFigure().color)
+
+        onView(withId(R.id.ingredient_list_recycler_view))
+            .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, getBackgroundColorAction))
+            .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+
+        assertTrue("is gradient equal", selected.color == getBackgroundColorAction.getBackgroundFigure().color)
+
+        onView(withId(R.id.ingredient_list_recycler_view))
+            .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, getBackgroundColorAction))
+
+        assertTrue("is gradient equal", unselected.color == getBackgroundColorAction.getBackgroundFigure().color)
+
     }
 }
