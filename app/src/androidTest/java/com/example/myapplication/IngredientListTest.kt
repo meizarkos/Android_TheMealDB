@@ -112,7 +112,7 @@ fun setSearchViewQuery(query: String, submit: Boolean): ViewAction {
 
 
 @RunWith(AndroidJUnit4::class)
-class IngredientListTest {
+class IngredientListTest{
 
     @Test
     fun test_ingredient_recycler_view_is_displayed() {
@@ -260,3 +260,4 @@ class IngredientListTest {
 
     }
 }
+

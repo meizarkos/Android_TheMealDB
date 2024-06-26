@@ -11,13 +11,13 @@
       <entry key="check_background_color_change()">
         <State />
       </entry>
-      <entry key="failure_is_displayed()">
-        <State />
-      </entry>
       <entry key="loader_is_displayed()">
         <State />
       </entry>
       <entry key="test_ingredient_list_has_no_result()">
+        <State />
+      </entry>
+      <entry key="test_ingredient_recycler_view_is_displayed()">
         <State />
       </entry>
     </value>
