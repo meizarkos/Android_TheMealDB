@@ -58,6 +58,11 @@ class AllRecipesTest{
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         device.executeShellCommand("svc wifi disable")
         device.executeShellCommand("svc data disable")
+        ActivityScenario.launch(AllRecipes::class.java)
+
+        onView(withId(R.id.all_recipes_failure_text_view)).check(matches(isDisplayed()))
+        onView(withId(R.id.all_recipes_progress_bar)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.all_recipes_no_result_text_view)).check(matches(not(isDisplayed())))
 
         device.executeShellCommand("svc wifi enable")
         device.executeShellCommand("svc data enable")
