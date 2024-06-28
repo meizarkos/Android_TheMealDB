@@ -8,16 +8,16 @@
       <SelectionState runConfigName="IngredientListTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="test_ingredient_on_click()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="test_ingredient_on_click_when_changing_screen()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="test_ingredient_recycler_view_is_displayed()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="loader_is_displayed()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="test_ingredient_recycler_view_is_displayed() (1)">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="test_ingredient_list_has_no_result()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="test_recipes_list_has_no_result()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

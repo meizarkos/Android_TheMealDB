@@ -95,7 +95,7 @@ class GetFrameLayoutBackgroundColorAction(
 
 fun setSearchViewQuery(query: String, submit: Boolean): ViewAction {
     return ViewActions.actionWithAssertions(object : ViewAction {
-        override fun getConstraints(): org.hamcrest.Matcher<View>? {
+        override fun getConstraints(): Matcher<View>? {
             return ViewMatchers.isAssignableFrom(SearchView::class.java)
         }
 
