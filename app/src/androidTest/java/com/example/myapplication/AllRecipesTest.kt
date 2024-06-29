@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import androidx.core.graphics.scaleMatrix
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
@@ -40,6 +41,9 @@ class AllRecipesTest{
 
     @After
     fun tearDown(){
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        device.executeShellCommand("svc wifi enable")
+        device.executeShellCommand("svc data enable")
         scenario?.moveToState(Lifecycle.State.DESTROYED);
     }
 
@@ -77,10 +81,11 @@ class AllRecipesTest{
 
     @Test
     fun failure_is_displayed(){
+        scenario?.moveToState(Lifecycle.State.DESTROYED)
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         device.executeShellCommand("svc wifi disable")
         device.executeShellCommand("svc data disable")
-        Thread.sleep(2000)
+        Thread.sleep(1000)
         ActivityScenario.launch(AllRecipes::class.java)
 
         onView(withId(R.id.all_recipes_failure_text_view)).check(matches(isDisplayed()))
@@ -97,6 +102,7 @@ class AllRecipesTest{
 
     @Test
     fun modify_api_res_through_choice(){
+        scenario?.moveToState(Lifecycle.State.DESTROYED);
         ActivityScenario.launch(MainActivity::class.java)
         Thread.sleep(1000)
         onView(withId(R.id.ingredient_list_recycler_view))

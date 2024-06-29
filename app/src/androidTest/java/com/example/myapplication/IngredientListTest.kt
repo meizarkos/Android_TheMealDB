@@ -23,6 +23,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import com.example.myapplication.viewmodels.IngredientViewModel
+import com.example.myapplication.views.AllRecipes
 import com.example.myapplication.views.MainActivity
 import org.hamcrest.Matcher
 import org.junit.Test
@@ -116,6 +117,8 @@ fun setSearchViewQuery(query: String, submit: Boolean): ViewAction {
 
 @RunWith(AndroidJUnit4::class)
 class IngredientListTest{
+
+    private var scenario: ActivityScenario<MainActivity>? = null
 
     @Before
     fun setUp(){
