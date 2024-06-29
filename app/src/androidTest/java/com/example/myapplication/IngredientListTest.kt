@@ -28,8 +28,11 @@ import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.hamcrest.CoreMatchers.not
+import org.junit.After
 import org.junit.Assert.assertTrue
-
+import org.junit.Before
+import org.junit.runners.Suite
+import org.junit.runners.Suite.SuiteClasses
 
 class GetBackgroundColorAction : ViewAction {
 
@@ -114,9 +117,25 @@ fun setSearchViewQuery(query: String, submit: Boolean): ViewAction {
 @RunWith(AndroidJUnit4::class)
 class IngredientListTest{
 
+    @Before
+    fun setUp(){
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+
+        device.executeShellCommand("svc wifi enable")
+        device.executeShellCommand("svc data enable")
+    }
+
+    @After
+    fun tearDown(){
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        device.executeShellCommand("svc wifi enable")
+        device.executeShellCommand("svc data enable")
+    }
+
     @Test
     fun test_ingredient_recycler_view_is_displayed() {
         ActivityScenario.launch(MainActivity::class.java)
+        Thread.sleep(1000)
         onView(withId(R.id.ingredient_list_recycler_view)).check(matches(isDisplayed()))
         onView(withId(R.id.ingredient_list_progress_bar)).check(matches(not(isDisplayed())))
         onView(withId(R.id.ingredient_no_result_text_view)).check(matches(not(isDisplayed())))
@@ -148,15 +167,11 @@ class IngredientListTest{
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         device.executeShellCommand("svc wifi disable")
         device.executeShellCommand("svc data disable")
-        ActivityScenario.launch(MainActivity::class.java)
         Thread.sleep(1000)
-
+        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.ingredient_failure_text_view)).check(matches(isDisplayed()))
         onView(withId(R.id.ingredient_list_progress_bar)).check(matches(not(isDisplayed())))
         onView(withId(R.id.ingredient_no_result_text_view)).check(matches(not(isDisplayed())))
-
-        device.executeShellCommand("svc wifi enable")
-        device.executeShellCommand("svc data enable")
     }
 
     @Test

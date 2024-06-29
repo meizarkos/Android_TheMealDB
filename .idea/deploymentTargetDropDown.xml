@@ -2,22 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="IngredientListTest">
+      <entry key="AllRecipesTest">
+        <State />
+      </entry>
+      <entry key="AllTestsSuite">
+        <State />
+      </entry>
+      <entry key="DetailRecipeTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="check_background_color_change()">
+      <entry key="failure_is_displayed()">
         <State />
       </entry>
-      <entry key="loader_is_displayed()">
-        <State />
-      </entry>
-      <entry key="test_ingredient_list_has_no_result()">
-        <State />
-      </entry>
-      <entry key="test_ingredient_recycler_view_is_displayed()">
+      <entry key="modify_api_res_through_choice()">
         <State />
       </entry>
     </value>
