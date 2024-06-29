@@ -2,8 +2,11 @@ package com.example.myapplication
 
 
 import android.graphics.drawable.GradientDrawable
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -23,6 +26,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import com.example.myapplication.viewmodels.IngredientViewModel
+import com.example.myapplication.viewmodels.RecipesViewModel
 import com.example.myapplication.views.AllRecipes
 import com.example.myapplication.views.MainActivity
 import org.hamcrest.Matcher
@@ -97,28 +101,8 @@ class GetFrameLayoutBackgroundColorAction(
 }
 
 
-fun setSearchViewQuery(query: String, submit: Boolean): ViewAction {
-    return ViewActions.actionWithAssertions(object : ViewAction {
-        override fun getConstraints(): Matcher<View>? {
-            return ViewMatchers.isAssignableFrom(SearchView::class.java)
-        }
-
-        override fun getDescription(): String {
-            return "Change view query"
-        }
-
-        override fun perform(uiController: UiController?, view: View?) {
-            val searchView = view as SearchView
-            searchView.setQuery(query, submit)
-        }
-    })
-}
-
-
 @RunWith(AndroidJUnit4::class)
 class IngredientListTest{
-
-    private var scenario: ActivityScenario<MainActivity>? = null
 
     @Before
     fun setUp(){
@@ -130,9 +114,7 @@ class IngredientListTest{
 
     @After
     fun tearDown(){
-        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        device.executeShellCommand("svc wifi enable")
-        device.executeShellCommand("svc data enable")
+        tearDownCustom()
     }
 
     @Test
@@ -167,10 +149,11 @@ class IngredientListTest{
 
     @Test
     fun failure_is_displayed(){
+
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         device.executeShellCommand("svc wifi disable")
         device.executeShellCommand("svc data disable")
-        Thread.sleep(1000)
+        Thread.sleep(3000)
         ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.ingredient_failure_text_view)).check(matches(isDisplayed()))
         onView(withId(R.id.ingredient_list_progress_bar)).check(matches(not(isDisplayed())))

@@ -1,5 +1,8 @@
 package com.example.myapplication
 
+import android.os.Handler
+import android.os.Looper
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -13,6 +16,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
+import com.example.myapplication.viewmodels.IngredientViewModel
 import com.example.myapplication.viewmodels.RecipesViewModel
 import com.example.myapplication.views.AllRecipes
 import org.hamcrest.CoreMatchers.not
@@ -36,21 +40,19 @@ class DetailRecipeTest{
 
     @After
     fun tearDown(){
-        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        device.executeShellCommand("svc wifi enable")
-        device.executeShellCommand("svc data enable")
+        tearDownCustom()
     }
 
     @Test
     fun detail_view_is_displayed() {
         ActivityScenario.launch(AllRecipes::class.java)
 
-        Thread.sleep(1000)
+        Thread.sleep(2000)
 
         onView(withId(R.id.all_recipes_recycler_view))
             .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
 
-        Thread.sleep(1000)
+        Thread.sleep(2000)
 
         onView(withId(R.id.recipe_detail_image_view)).check(matches(isDisplayed()))
         onView(withId(R.id.recipe_detail_title_text_view)).check(matches(isDisplayed()))
@@ -74,13 +76,29 @@ class DetailRecipeTest{
         Thread.sleep(1000)
         device.executeShellCommand("svc wifi disable")
         device.executeShellCommand("svc data disable")
-        Thread.sleep(1000)
+        Thread.sleep(2000)
         onView(withId(R.id.all_recipes_recycler_view))
             .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
 
-        onView(withId(R.id.recipe_detail_failure_text_view)).check(matches(isDisplayed()))
 
-        device.executeShellCommand("svc wifi enable")
-        device.executeShellCommand("svc data enable")
+        onView(withId(R.id.recipe_detail_failure_text_view)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun loader_is_displayed(){
+
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+
+        ActivityScenario.launch(AllRecipes::class.java)
+
+        Thread.sleep(1000)
+        device.executeShellCommand("svc wifi disable")
+        device.executeShellCommand("svc data disable")
+        onView(withId(R.id.all_recipes_recycler_view))
+            .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        Thread.sleep(2000)
+
+
+        onView(withId(R.id.recipe_detail_progress_bar)).check(matches(isDisplayed()))
     }
 }

@@ -5,19 +5,19 @@
       <entry key="AllRecipesTest">
         <State />
       </entry>
-      <entry key="AllTestsSuite">
+      <entry key="DetailRecipeTest">
         <State />
       </entry>
-      <entry key="DetailRecipeTest">
+      <entry key="IngredientListTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="failure_is_displayed()">
+      <entry key="failure_is_displayed_detail_recipes()">
         <State />
       </entry>
-      <entry key="modify_api_res_through_choice()">
+      <entry key="loader_is_displayed()">
         <State />
       </entry>
     </value>
